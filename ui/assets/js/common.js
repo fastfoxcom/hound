@@ -27,7 +27,12 @@ export function UrlToRepo(repo, path, line, rev) {
     // Next, slurp up the hostname by reading until either a `:` or `/` is found.
     // Finally, grab all remaining characters.
     var sshParts = /(git|hg)@(.*?)(:|\/)(.*)/.exec(url);
-    if (sshParts) {
+
+    // Another hack added for phabricator style git urls.
+    if (url.includes('phabricator') && sshParts) {
+        const urlParts = sshParts[4].split("/");
+        url = '//' + sshParts[2] + '/' + urlParts[0] + '/' + urlParts[1];
+    } else if (sshParts) {
         url = '//' + sshParts[2] + '/' + sshParts[4];
     }
 
