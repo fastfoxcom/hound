@@ -29,6 +29,9 @@ export function UrlToRepo(repo, path, line, rev) {
     var sshParts = /(git|hg)@(.*?)(:|\/)(.*)/.exec(url);
 
     // Another hack added for phabricator style git urls.
+    // ssh://phabricator-git@phabricator.broex.net/diffusion/BH/bhishma.git
+    // https://phabricator.broex.net/diffusion/BH/bhishma/browse/master/cron/createAdhocOpenHouse.js$21
+    // https://phabricator.broex.net/diffusion/BH/browse/master/cron/createAdhocOpenHouse.js$21
     if (url.includes('phabricator') && sshParts) {
         const urlParts = sshParts[4].split("/");
         url = '//' + sshParts[2] + '/' + urlParts[0] + '/' + urlParts[1];
